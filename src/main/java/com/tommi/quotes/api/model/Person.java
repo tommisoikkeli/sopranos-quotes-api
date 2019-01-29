@@ -1,9 +1,12 @@
 package com.tommi.quotes.api.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -20,11 +23,18 @@ public class Person {
 
     private String image;
 
-    public Person(Long id, String name, String image) {
+    @OneToMany(mappedBy = "person")
+    @JsonBackReference
+    private List<Quote> quotes;
+
+    public Person(Long id, String name, String image, List<Quote> quotes) {
         this.id = id;
         this.name = name;
         this.image = image;
+        this.quotes = quotes;
     }
+
+    public Person() {}
 
     public Long getId() {
         return id;
@@ -48,5 +58,13 @@ public class Person {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public List<Quote> getQuotes() {
+        return quotes;
+    }
+
+    public void setQuotes(List<Quote> quotes) {
+        this.quotes = quotes;
     }
 }

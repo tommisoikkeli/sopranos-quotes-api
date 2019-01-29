@@ -1,10 +1,13 @@
 package com.tommi.quotes.api.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -16,6 +19,9 @@ public class Quote {
     @NotNull
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "person_id")
+    @JsonManagedReference
     private Person person;
 
     @Column(name = "quote_text")
@@ -29,6 +35,8 @@ public class Quote {
         this.quoteText = quoteText;
         this.rating = rating;
     }
+
+    public Quote() {}
 
     public Long getId() {
         return id;
