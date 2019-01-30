@@ -1,6 +1,8 @@
 package com.tommi.quotes.api.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="people")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +27,7 @@ public class Person {
     private String image;
 
     @OneToMany(mappedBy = "person")
-    @JsonBackReference
+    @JsonIgnoreProperties("person")
     private List<Quote> quotes;
 
     public Person(Long id, String name, String image, List<Quote> quotes) {

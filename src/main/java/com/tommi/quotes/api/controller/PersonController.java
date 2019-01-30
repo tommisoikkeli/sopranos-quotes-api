@@ -11,16 +11,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PersonController {
 
+    private final PersonRepository personRepository;
+
     @Autowired
-    private PersonRepository personRepository;
+    public PersonController(PersonRepository personRepository) {
+        this.personRepository = personRepository;
+    }
 
     @GetMapping("/people")
-    public List<Person> findAll() {
+    public List<Person> getAllPeople() {
         return (List<Person>)personRepository.findAll();
     }
 
     @GetMapping("/people/{id}")
-    public Person findPersonById(@PathVariable("id") Long id) {
+    public Person getPersonById(@PathVariable("id") Long id) {
         return personRepository.findById(id)
                 .orElse(null);
     }

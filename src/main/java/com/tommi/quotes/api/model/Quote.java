@@ -1,6 +1,8 @@
 package com.tommi.quotes.api.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +15,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "quotes")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Quote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +24,7 @@ public class Quote {
 
     @ManyToOne
     @JoinColumn(name = "person_id")
-    @JsonManagedReference
+    @JsonIgnoreProperties("quotes")
     private Person person;
 
     @Column(name = "quote_text")
@@ -30,7 +33,7 @@ public class Quote {
 
     private int rating;
 
-    public Quote(Person person, @NotNull String quoteText, int rating) {
+    public Quote(Person person, String quoteText, int rating) {
         this.person = person;
         this.quoteText = quoteText;
         this.rating = rating;

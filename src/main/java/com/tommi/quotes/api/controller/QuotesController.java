@@ -11,11 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class QuotesController {
 
-    @Autowired
-    private QuoteRepository quoteRepository;
+    private final QuoteRepository quoteRepository;
 
-    @GetMapping("/quotes")
-    public List<Quote> getQuotes() {
+    @Autowired
+    public QuotesController(QuoteRepository quoteRepository) {
+        this.quoteRepository = quoteRepository;
+    }
+
+    @GetMapping("/quotes/all")
+    public List<Quote> getAllQuotes() {
         return (List<Quote>)quoteRepository.findAll();
     }
 
@@ -23,6 +27,11 @@ public class QuotesController {
     public Quote getQuoteById(@PathVariable("id") Long id) {
         return quoteRepository.findById(id)
                 .orElse(null);
+    }
+
+    @GetMapping("/quotes/random")
+    public Quote getRandomQuote() {
+        return quoteRepository.getRandomQuote();
     }
 
 }
