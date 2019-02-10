@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -34,6 +35,14 @@ public class QuotesController {
     @GetMapping("/quotes/random")
     public Quote getRandomQuote() {
         return quoteRepository.getRandomQuote();
+    }
+
+    @PutMapping("/quotes/{id}")
+    public Quote updateRating(@PathVariable("id") Long id) {
+        Quote quote = quoteRepository.findById(id).orElse(null);
+        quote.setRating(quote.getRating() + 1);
+        quoteRepository.save(quote);
+        return quote;
     }
 
 }
