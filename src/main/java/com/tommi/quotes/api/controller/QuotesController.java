@@ -37,6 +37,11 @@ public class QuotesController {
         return quoteRepository.getRandomQuote();
     }
 
+    @GetMapping("/quotes/best")
+    public List<Quote> getTopRatedQuotes() {
+        return quoteRepository.getTopRatedQuotes();
+    }
+
     @PutMapping("/quotes/{id}")
     public Quote updateRating(@PathVariable("id") Long id) {
         Quote quote = quoteRepository.findById(id).orElse(null);
