@@ -21,16 +21,16 @@ public class Person {
     @NotNull
     private String name;
 
-    private String image;
+    private String url;
 
     @OneToMany(mappedBy = "person")
     @JsonIgnoreProperties("person")
     private List<Quote> quotes;
 
-    public Person(Long id, String name, String image, List<Quote> quotes) {
+    public Person(Long id, String name, String url, List<Quote> quotes) {
         this.id = id;
         this.name = name;
-        this.image = image;
+        this.url = url;
         this.quotes = quotes;
     }
 
@@ -52,12 +52,12 @@ public class Person {
         this.name = name;
     }
 
-    public String getImage() {
-        return image;
+    public String getUrl() {
+        return url;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public List<Quote> getQuotes() {
